@@ -4,6 +4,10 @@ main {
   background-color: rgb(199, 228, 228);
 }
 
+hr {
+  margin-block: 0.7rem;
+}
+
 .mortgage-wrapper {
   height: 100%;
   display: flex;
@@ -142,20 +146,54 @@ main {
   align-content: center;
   margin-inline: auto;
   background-color: #133041;
+  transition: allow-discrete opacity 1s linear;
 
-  img {
-    width: 7.5rem;
-    aspect-ratio: 1;
-    margin-inline: auto;
+  .result-instructions {
+    img {
+      width: 7.5rem;
+      aspect-ratio: 1;
+      margin-inline: auto;
+    }
+
+    h3 {
+      text-align: center;
+    }
+
+    p {
+      width: 75%;
+      margin-inline: auto;
+    }
   }
 
-  h3 {
-    text-align: center;
-  }
-
-  p {
-    width: 75%;
+  .results {
+    width: 95%;
     margin-inline: auto;
+    border-radius: 10px;
+    display: none;
+
+    .result-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: rgb(26 26 26 / 0.4);
+      border: 2px solid steelblue;
+      border-radius: 7px;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+
+      > :first-child {
+        p {
+          color: #d2ee48;
+          font-size: 1.6rem;
+        }
+      }
+
+      > :last-child {
+        p {
+          font-size: 1.3rem;
+        }
+      }
+    }
   }
 }
 
