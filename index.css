@@ -1,3 +1,9 @@
+main {
+  container-type: inline-size;
+  align-content: center;
+  background-color: rgb(199, 228, 228);
+}
+
 .mortgage-wrapper {
   height: 100%;
   display: flex;
@@ -22,19 +28,6 @@
     flex-direction: column;
   }
 
-  .mortgage-amount,
-  .mortgage-term,
-  .interest-rate {
-    label {
-      margin-bottom: 0.5rem;
-    }
-
-    input {
-      background-color: #fff;
-      padding: 0.3rem;
-    }
-  }
-
   .mortgage-title {
     > :last-child {
       max-width: fit-content;
@@ -43,6 +36,51 @@
       color: rgb(66, 66, 237);
       text-decoration: underline;
       cursor: pointer;
+    }
+  }
+
+  .mortgage-amount,
+  .mortgage-term,
+  .interest-rate {
+    label {
+      margin-bottom: 0.5rem;
+    }
+
+    > :last-child {
+      position: relative;
+      align-content: center;
+      border: 2px solid #1a1a1a;
+
+      input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        border: none;
+        color: #1a1a1a;
+        background-color: #fff;
+        padding: 0.3rem;
+        width: 100%;
+
+        &:focus + span {
+          background-color: rgb(223, 206, 110);
+        }
+      }
+
+      span {
+        align-content: center;
+        padding-inline: 1rem;
+        background-color: lightblue;
+        position: absolute;
+        max-width: fit-content;
+        height: 100%;
+        right: 0;
+      }
+    }
+  }
+
+  .mortgage-amount {
+    span {
+      left: 0;
     }
   }
 
@@ -114,5 +152,40 @@
   p {
     width: 75%;
     margin-inline: auto;
+  }
+}
+
+@container (width >= 576px) {
+  .mortgage-wrapper {
+    height: auto;
+    flex-direction: row;
+    width: min(95%, 60rem);
+    margin-inline: auto;
+
+    > * {
+      border-radius: 10px;
+    }
+  }
+
+  .mortgage-calculator {
+    flex: 1;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+
+    > :first-child {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    > *:not(.mortgage-term, .interest-rate) {
+      grid-column: span 2;
+    }
+
+    > :last-child {
+      width: 75%;
+    }
+  }
+
+  .mortgage-results {
+    border-bottom-left-radius: 30px;
   }
 }
