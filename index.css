@@ -51,7 +51,7 @@ main {
       align-content: center;
       border: 2px solid #1a1a1a;
 
-      input[type="number"] {
+      input {
         -webkit-appearance: textfield;
         -moz-appearance: textfield;
         appearance: textfield;
@@ -79,6 +79,10 @@ main {
   }
 
   .mortgage-amount {
+    input {
+      padding-left: 13% !important;
+    }
+
     span {
       left: 0;
     }
