@@ -1,9 +1,9 @@
-initialize();
-
 /** @param {number} ms */
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const dynamicCommasRegex = /\B(?=(\d{3})+(?!\d))/g;
 const numsOnlyRegex = /[^\d]/g;
+
+initialize();
 
 function initialize() {
   const mortgageCalculatorElem = /** @type {HTMLFormElement} */ (document.getElementById('mortgageCalculator'));
