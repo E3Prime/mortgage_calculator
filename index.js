@@ -1,44 +1,40 @@
 /** @param {number} ms */
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const mortgageCalculatorElem = /** @type {HTMLFormElement} */ (document.getElementById('mortgageCalculator'));
+const clearInfoBtn = /** @type {HTMLButtonElement} */ (mortgageCalculatorElem.querySelector('#clearInfo'));
 const dynamicCommasRegex = /\B(?=(\d{3})+(?!\d))/g;
 const numsOnlyRegex = /[^\d]/g;
 
-initialize();
+clearInfoBtn.addEventListener('click', () => mortgageCalculatorElem.reset());
+mortgageCalculatorElem.addEventListener('input', formatMortgage);
+mortgageCalculatorElem.addEventListener('submit', calculateMortgage);
 
-function initialize() {
-  const mortgageCalculatorElem = /** @type {HTMLFormElement} */ (document.getElementById('mortgageCalculator'));
-  const clearInfoBtn = /** @type {HTMLButtonElement} */ (mortgageCalculatorElem.querySelector('#clearInfo'));
+/** @param {Event} e */
+function formatMortgage(e) {
+  const input = /** @type {HTMLInputElement} */ (e.target);
+  const inputId = input.id;
+  if (inputId === 'mortgageAmount') input.value = input.value.replace(numsOnlyRegex, '').replace(dynamicCommasRegex, ',');
+  else if (inputId === 'mortgageTerm') input.value = input.value.replace(numsOnlyRegex, '');
+}
 
-  /** @param {Event} e */
-  const formatMortgage = (e) => {
-    const input = /** @type {HTMLInputElement} */ (e.target);
-    const inputId = input.id;
-    if (inputId === 'mortgageAmount') input.value = input.value.replace(numsOnlyRegex, '').replace(dynamicCommasRegex, ',');
-    else if (inputId === 'mortgageTerm') input.value = input.value.replace(numsOnlyRegex, '');
-  };
+/** @param {SubmitEvent} e */
+function calculateMortgage(e) {
+  e.preventDefault();
+  const form = /** @type {HTMLFormElement} */ (e.target);
+  const {mortgageAmount, mortgageTerm, interestRate, repaymentChoice, interestChoice} = /** @type {Object.<string, HTMLInputElement>} */ (form);
+  const principal = Number(mortgageAmount.value.replaceAll(',', ''));
+  const monthlyRate = Number(interestRate.value) / 100 / 12;
+  const totalPayments = Number(mortgageTerm.value) * 12;
 
-  /** @param {SubmitEvent} e */
-  const calculateMortgage = (e) => {
-    e.preventDefault();
-    const form = /** @type {HTMLFormElement} */ (e.target);
-    const {mortgageAmount, mortgageTerm, interestRate, repaymentChoice, interestChoice} = /** @type {Object.<string, HTMLInputElement>} */ (form);
-    const principal = Number(mortgageAmount.value.replaceAll(',', ''));
-    const monthlyRate = Number(interestRate.value) / 100 / 12;
-    const totalPayments = Number(mortgageTerm.value) * 12;
-
-    if (repaymentChoice.checked) {
-      const monthlyPayment = calculateRepayment(principal, monthlyRate, totalPayments);
-      const totalRepayment = (Number(monthlyPayment) * totalPayments).toFixed(2);
-      displayResults(monthlyPayment, totalRepayment);
-    } else if (interestChoice.checked) {
-      const monthlyPayment = calculateInterestOnly(principal, monthlyRate);
-      displayResults(monthlyPayment);
-    }
-  };
-
-  clearInfoBtn.addEventListener('click', () => mortgageCalculatorElem.reset());
-  mortgageCalculatorElem.addEventListener('input', formatMortgage);
-  mortgageCalculatorElem.addEventListener('submit', calculateMortgage);
+  if (repaymentChoice.checked) {
+    const monthlyPayment = calculateRepayment(principal, monthlyRate, totalPayments);
+    const totalRepayment = (Number(monthlyPayment) * totalPayments).toFixed(2);
+    displayResults(monthlyPayment, totalRepayment);
+  } else if (interestChoice.checked) {
+    const monthlyPayment = calculateInterestOnly(principal, monthlyRate);
+    displayResults(monthlyPayment);
+  }
 }
 
 /**
