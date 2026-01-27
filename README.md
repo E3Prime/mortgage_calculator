@@ -8,7 +8,7 @@ A responsive financial tool that allows users to estimate their monthly mortgage
 
 ## 🔗 Links
 
-- **Live Demo Link:**
+- **Live Demo Link:** https://e3prime.github.io/mortgage_calculator
 
 ## 🧮 Mortgage Calculator Showcase
 
